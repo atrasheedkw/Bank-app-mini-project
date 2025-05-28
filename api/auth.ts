@@ -2,17 +2,16 @@
 
 import instance from ".";
 import { storeToken } from "./storage";
-import axios from "axios";
 
-///// responce data interface
-interface loginResponce {
+///// response data interface
+interface loginResponse {
   token: string;
   user?: object;
 }
-// / login function that will be activated once user click the login button "onpress" (it will send the request to BE)
+// / login function that will be activated once user clicks the login button "onPress" (it will send the request to BE)
 const loginFunction = async (username: string, password: string) => {
   try {
-    const { data } = await instance.post<loginResponce>(
+    const { data } = await instance.post<loginResponse>(
       "/mini-project/api/auth/login",
       {
         username,
@@ -20,7 +19,7 @@ const loginFunction = async (username: string, password: string) => {
       }
     );
 
-    //////  the comand that send the token data to storage and encrypt it
+    //////  the command that sends the token data to storage and encrypts it
     if (data.token) {
       await storeToken(data.token);
     }
@@ -29,7 +28,7 @@ const loginFunction = async (username: string, password: string) => {
     return data;
   } catch (error) {
     /////// to capture the error coming from the "try" above.
-    console.log("loging Function Error", error);
+    console.log("logging Function Error", error);
   }
 };
 
@@ -41,7 +40,7 @@ const registerFunction = async (
   password: string
 ) => {
   try {
-    const { data } = await instance.post<loginResponce>(
+    const { data } = await instance.post<loginResponse>(
       "/mini-project/api/auth/register",
       {
         username,
@@ -50,7 +49,7 @@ const registerFunction = async (
       }
     );
 
-    //////  the comand that send the token data to storage and encrypt it
+    //////  the command that sends the token data to storage and encrypts it
     if (data.token) {
       await storeToken(data.token);
     }
